@@ -1,41 +1,10 @@
 from gpt4all import GPT4All
 import re
 
-# Load the upgraded model
+
 model = GPT4All("mistral-7b-instruct-v0.1.Q4_0.gguf")
 
 def question_to_sql(question: str) -> str:
-    # === Step 1: Prompt the LLM directly ===z
-    known_questions = {
-        "what is my total sales": """
-            SELECT SUM(total_sales) AS total_sales FROM total_sales;
-        """,
-        "calculate the roas": """
-            SELECT 
-                SUM(total_sales.total_sales) / NULLIF(SUM(ad_sales.ad_spend), 0) AS roas
-            FROM 
-                ad_sales
-            JOIN 
-                total_sales ON ad_sales.item_id = total_sales.item_id;
-        """,
-        "which product had the highest cpc": """
-            SELECT 
-                item_id, 
-                ad_spend / NULLIF(clicks, 0) AS cpc
-            FROM 
-                ad_sales
-            ORDER BY 
-                cpc DESC
-            LIMIT 1;
-        """
-    }
-    
-    q_clean = question.lower().strip()
-    for key, val in known_questions.items():
-        if key in q_clean:
-            print("🔒 Matched hardcoded query:", key)
-            return val.strip()
-    
     
     prompt = f"""
 You are a SQL expert. Convert the user's question into a valid SQL query using ONLY the following tables:
