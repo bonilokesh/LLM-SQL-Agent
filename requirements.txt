@@ -1,0 +1,6 @@
+fastapi
+uvicorn
+gpt4all
+pandas
+sqlite3
+openpyxl
