@@ -7,7 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Or restrict to ["http://localhost:8000"]
+    allow_origins=["*"],  
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -22,7 +22,7 @@ class Query(BaseModel):
 def ask(query: Query):
     try:
         sql = question_to_sql(query.question)
-        result, columns = execute_sql(sql)  # ✅ Unpack both
+        result, columns = execute_sql(sql) 
         return {
             "question": query.question,
             "generated_sql": sql,
